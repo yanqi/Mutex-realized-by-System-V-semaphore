@@ -18,7 +18,7 @@ CProcessMutex::~CProcessMutex()
 
 bool CProcessMutex::Lock(const long long ms)
 {
-	//互斥锁创建失败
+	//create failed
 	if (NULL == m_pMutex)
 	{
 		return false;
@@ -102,7 +102,7 @@ CProcessMutex::~CProcessMutex()
 bool CProcessMutex::Lock(const long long ms)
 {
 	int ret;
-	//当前线程不是已经获得锁的线程
+	//If current thread is not the thread which hold the key
 	if (!(m_locked == true && m_tid == gettid()))
 	{
 		m_semBuf.sem_num = 0;
@@ -127,7 +127,7 @@ bool CProcessMutex::Lock(const long long ms)
 			m_errno=errno;
 			return false;
 		}
-		//上锁的线程号
+		//save the thread id
 		if (m_locked == false)
 			m_tid = gettid();
 		m_locked = true;
@@ -139,7 +139,7 @@ bool CProcessMutex::Lock(const long long ms)
 
 bool CProcessMutex::UnLock()
 {
-	//获取当前值
+	//get the current value
 	int val = semctl(m_sem, 0, GETVAL, 0);
 	if (val != 1)
 	{
