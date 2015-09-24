@@ -24,7 +24,7 @@
 class CProcessMutex
 {
 public:
-    /* 默认创建匿名的互斥 */
+    /* Anonymous mutex created by default */
     CProcessMutex(const char* name = NULL);
     ~CProcessMutex();
 
